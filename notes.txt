@@ -1,0 +1,66 @@
+Overall goal
+  - given a list of cards
+    - which have mana values associated with them
+  - calculate the probability that you can use all your mana on the first 4 turns (or n turns)
+    - can also calculate probabilities you would be flooded or screwed; but need definitions for that
+  - or calculate probability you can get a certain combo in n turns
+
+How will we do it
+  - user enters cards or curve
+  - we run N simulations and for each 
+    - opening hand - maybe we can skip this (as long as they have a land)
+      - do we have at least one land and a 1 cost spell?
+    - second hand
+      - do they have another land and total cost of 2?
+    - third hand
+      - 3rd land and total cost of 3?
+    - fourth hand
+      - 4th land and total cost of 4
+    - ... Nth hand
+    - keep counters of success and failures, with failures tracking which hand they missed
+    - report results after N simulations
+
+Will need
+  - access to mtg api
+  - user can search for and add the cards from their deck
+  - paste in deck from mtga?
+  - or can just input their curve and number of lands
+      X 1 drops
+      Y 2 drops
+      Z 3 drops
+      ...etc
+
+Tricky parts
+  - dealing with multi colored lands or spells
+      - will need to check specific mana requirements
+  - tap lands
+    - when calculating mana available, check for lands that say '{T} add {W} or {G}'  we can have a pool that can pull from either one
+  - anything besides lands adding to the mana pool.  this whole thing will be tough for ramp decks
+    - can have a simple search for text like '{T} add {G}' to deal with this
+      which means on each turn, we should calculate the total mana available instead of just lands
+
+Questions
+  do we hit one endpoint and return all the stuff? or break it up?
+  
+
+MVP
+  assume monocolored cards
+  just enter the curve and number of lands - no api lookup
+
+
+Structure
+  main.go 
+  router 
+  controllers
+    onCurveController
+  services
+    onCurveService
+  entities 
+    Card 
+      Spell 
+      Land 
+    ManaPool
+
+
+
+
