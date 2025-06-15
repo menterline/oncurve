@@ -18,6 +18,16 @@ func (m *ManaPool) AddtoPool(mana Mana, amount int) {
 	m.AvailableMana[mana] += amount
 }
 
+func (m ManaPool) HasMana(totalMana []Mana) bool {
+	for _, mana := range totalMana {
+		if m.AvailableMana == nil || m.AvailableMana[mana] <= 0 {
+			return false
+		}
+		m.RemoveFromPool(mana)
+	}
+	return true
+}
+
 func (m *ManaPool) RemoveFromPool(mana Mana) error {
 	if m.AvailableMana == nil {
 		return errors.New("mana pool is empty")

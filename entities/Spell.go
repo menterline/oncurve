@@ -12,3 +12,7 @@ func (s *Spell) GetManaCost() []Mana {
 func (s *Spell) GetCardType() CardType {
 	return s.CardType
 }
+
+func (s Spell) CanCast(manaPool ManaPool) bool {
+	return manaPool.HasMana(s.Cost)
+}

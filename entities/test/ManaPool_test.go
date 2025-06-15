@@ -30,6 +30,22 @@ func TestAddToPool(t *testing.T) {
 	}
 }
 
+func TestHasMana(t *testing.T) {
+	manaMap := map[entities.Mana]int{
+		entities.Red:   2,
+		entities.Blue:  1,
+		entities.Green: 3,
+	}
+	manaPool := entities.ManaPool{AvailableMana: manaMap}
+
+	if !manaPool.HasMana([]entities.Mana{entities.Red, entities.Blue}) {
+		t.Errorf("Expected mana pool to have Red and Blue mana")
+	}
+	if manaPool.HasMana([]entities.Mana{entities.Blue, entities.Blue}) {
+		t.Errorf("Expected mana pool to not have enough Blue mana")
+	}
+}
+
 func TestRemoveFromPoolValid(t *testing.T) {
 	manaMap := map[entities.Mana]int{
 		entities.Red:   2,
