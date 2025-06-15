@@ -55,11 +55,26 @@ Structure
     onCurveController
   services
     onCurveService
-  entities 
-    Card 
-      Spell 
-      Land 
+  entities  
+    Spell {
+        CMC: Array<Mana>
+        type: {
+            creature 
+            instant 
+            sorcery 
+            etc
+          }
+      }  
+    Land  
     ManaPool
+    Mana {
+        White
+        Blue 
+        Green 
+        Red 
+        Black
+        Colorless 
+      }
 
 
 
