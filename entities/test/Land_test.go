@@ -3,7 +3,7 @@ package entities
 import (
 	"testing"
 
-	"github.com/menterline/oncurve-service/entities"
+	"github.com/menterline/oncurve/entities"
 )
 
 func TestLandFactory(t *testing.T) {

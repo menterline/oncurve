@@ -1,0 +1,10 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o main"
+  bin = "main"
+  full_bin = "./main"
+
+[include]
+  extensions = ["go", "html"]
