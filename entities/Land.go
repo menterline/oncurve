@@ -1,5 +1,9 @@
 package entities
 
+// Ensure that the Mana type is defined in a separate package (e.g., "types")
+// and imported here, or move shared types to a new package to avoid import cycles.
+// import "yourmodule/types" // Uncomment and adjust as needed
+
 type Land struct {
 	ManaTypes map[Mana]int
 }

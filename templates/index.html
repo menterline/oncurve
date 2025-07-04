@@ -19,11 +19,12 @@
     <h1 class="text-3xl flex flex-row justify-center">ONCURVE</h1>
     <section class="flex flex-col gap-y-4 justify-center">
         <h3>ONCURVE is a tool to analyze Magic The Gathering decks</h3>
-        <p>A common metric for defining if a deck is staying 'on tempo' is if it is able to use all 
-            available mana for the first 4 turns.  With ONCURVE - you can run many experiments to understand the likelihood you
-            can achieve this.
+        <p>A common metric for defining if a deck is staying 'on curve' is if it is able to use all
+            available mana for the first 4 turns. With ONCURVE - you can run many experiments to understand the
+            likelihood you can achieve this.
         </p>
     </section>
+    <section class="flex flex-col gap-y-4" hx-get="/SimSettings" hx-swap="innerHTML" hx-trigger="load"></section>
 </body>
 
 </html>
