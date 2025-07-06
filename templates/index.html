@@ -16,13 +16,23 @@
 </style>
 
 <body class="bg-gray-500 flex flex-col gap-y-8 p-24 justify-center ">
-    <header>
-        <h1 class="text-3xl flex flex-row justify-center">ONCURVE</h1>
-        <h2>ONCURVE is a tool to analyze Magic The Gathering decks</h2>
-        <h3>A common metric for defining if a deck is staying 'on curve' is if it is able to use all
-            available mana for the first 4 turns. With ONCURVE - you can run many experiments to understand the
-            likelihood you can achieve this.
-        </h3>
+    <header class="flex flex-col gap-y-8">
+        <section>
+            <h1 class="text-3xl flex flex-row justify-center">ONCURVE</h1>
+            <h2>ONCURVE is a tool to analyze Magic The Gathering decks</h2>
+            <h3>A common metric for defining if a deck is staying 'on curve' is if it is able to use all
+                available mana for the first 4 turns. With ONCURVE - you can run many experiments to understand the
+                likelihood you can achieve this.
+            </h3>
+        </section>
+        <section>
+            <h4>Disclaimers/Assumptions:</h4>
+            <ul class="list-disc">
+                <li class="ml-8">Decks are mono colored</li>
+                <li class="ml-8">All lands are basic lands of the same color</li>
+                <li class="ml-8">Mana dorks or other tap effects are not taken in to account</li>
+            </ul>
+        </section>
     </header>
     <main>
         <section class="flex flex-row justify-evenly">
