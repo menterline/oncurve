@@ -1,0 +1,14 @@
+package deckbuilder
+
+import (
+	"html/template"
+	"net/http"
+)
+
+func ServeDeckBuilder(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/DeckBuilder/index.html"))
+	if err := tmpl.Execute(w, nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
