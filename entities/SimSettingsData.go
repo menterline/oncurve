@@ -4,18 +4,27 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type SimSettingsData struct {
-	NumberOfSims  int
-	NumberOfTurns int
+	numberOfSims  int
+	numberOfTurns int
 	Drops         map[string]int
+}
+
+func (s SimSettingsData) GetNumberOfSims() int {
+	return s.numberOfSims
+}
+
+func (s SimSettingsData) GetNumberOfTurns() int {
+	return s.numberOfTurns
 }
 
 func SimSettingsDataFromForm(req *http.Request) SimSettingsData {
 	drops := make(map[string]int)
 	for key, values := range req.Form {
-		if len(values) > 0 {
+		if strings.Contains(key, "drops") && len(values) > 0 {
 			res, err := strconv.Atoi(values[0])
 			if err != nil {
 				log.Fatalf("Error converting %s to int: %v\n", values[0], err)
@@ -32,8 +41,8 @@ func SimSettingsDataFromForm(req *http.Request) SimSettingsData {
 		log.Fatalf("Error converting numberOfTurns to int: %v\n", err)
 	}
 	return SimSettingsData{
-		NumberOfSims:  numSims,
-		NumberOfTurns: numTurns,
+		numberOfSims:  numSims,
+		numberOfTurns: numTurns,
 		Drops:         drops,
 	}
 }

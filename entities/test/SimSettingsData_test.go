@@ -23,11 +23,14 @@ func TestFormToMap(t *testing.T) {
 	result := entities.SimSettingsDataFromForm(req)
 
 	// Check if the result contains the expected keys and values
-	if result.NumberOfSims != 1000 {
-		t.Errorf("Expected numberOfSims to be '1000', got '%d'", result.NumberOfSims)
+	if result.GetNumberOfSims() != 1000 {
+		t.Errorf("Expected numberOfSims to be '1000', got '%d'", result.GetNumberOfSims())
 	}
-	if result.NumberOfTurns != 10 {
-		t.Errorf("Expected numberOfTurns to be '10', got '%d'", result.NumberOfTurns)
+	if result.GetNumberOfTurns() != 10 {
+		t.Errorf("Expected numberOfTurns to be '10', got '%d'", result.GetNumberOfTurns())
+	}
+	if len(result.Drops) != 3 {
+		t.Errorf("Expected 3 drops, got %d", len(result.Drops))
 	}
 	if result.Drops["1drops"] != 4 {
 		t.Errorf("Expected 1drops to be '4', got '%d'", result.Drops["1drops"])
