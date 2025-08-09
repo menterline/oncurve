@@ -2,7 +2,6 @@ package services
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/menterline/oncurve/entities"
 )
@@ -12,11 +11,24 @@ type SimulationResult struct {
 	Failures  int `json:"failures"`
 }
 
-func Simulate(parsedForm *http.Request) SimulationResult {
-	simData := entities.SimSettingsDataFromForm(parsedForm)
+func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {
+	successes := 0
+	failures := 0
+	for i := 0; i < simData.GetNumberOfSims(); i++ {
+		result := simData.Simulate(RunSimulation)
+		if result {
+			successes++
+		} else {
+			failures++
+		}
+	}
 	fmt.Println(simData)
 	return SimulationResult{
-		Successes: 400,
-		Failures:  100,
+		Successes: successes,
+		Failures:  failures,
 	}
+}
+
+func RunSimulation() {
+
 }

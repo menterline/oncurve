@@ -19,8 +19,8 @@ func TestFormToMap(t *testing.T) {
 	req.Form.Add("1drops", "4")
 	req.Form.Add("2drops", "3")
 	req.Form.Add("5drops", "1")
-	// Call the FormToMap function
-	result := entities.SimSettingsDataFromForm(req)
+	// Call the factory function
+	result, err := entities.NewSimSettingsData(req)
 
 	// Check if the result contains the expected keys and values
 	if result.GetNumberOfSims() != 1000 {
@@ -40,6 +40,26 @@ func TestFormToMap(t *testing.T) {
 	}
 	if result.Drops["5drops"] != 1 {
 		t.Errorf("Expected 5drops to be '1', got '%d'", result.Drops["5drops"])
+	}
+
+}
+
+func TestFormToMap_ExpectError(t *testing.T) {
+	// Create a mock HTTP request with form values
+	req, err := http.NewRequest("POST", "/simulate", nil)
+	if err != nil {
+		t.Fatalf("Failed to create request: %v", err)
+	}
+	req.Form = make(map[string][]string)
+	req.Form.Add("THIS IS A BAD STRING", "1000")
+	req.Form.Add("numberOfTurns", "10")
+	req.Form.Add("1drops", "4")
+	req.Form.Add("2drops", "3")
+	req.Form.Add("5drops", "1")
+	_, err = entities.NewSimSettingsData(req)
+
+	if err == nil {
+		t.Error("Expected an error due to bad string in form, but got none")
 	}
 
 }

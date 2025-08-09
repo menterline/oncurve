@@ -21,7 +21,7 @@ func (s SimSettingsData) GetNumberOfTurns() int {
 	return s.numberOfTurns
 }
 
-func SimSettingsDataFromForm(req *http.Request) SimSettingsData {
+func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
 	drops := make(map[string]int)
 	for key, values := range req.Form {
 		if strings.Contains(key, "drops") && len(values) > 0 {
@@ -34,15 +34,19 @@ func SimSettingsDataFromForm(req *http.Request) SimSettingsData {
 	}
 	numSims, err := strconv.Atoi(req.Form.Get("numberOfSims"))
 	if err != nil {
-		log.Fatalf("Error converting numberOfSims to int: %v\n", err)
+		return SimSettingsData{}, err
 	}
 	numTurns, err := strconv.Atoi(req.Form.Get("numberOfTurns"))
 	if err != nil {
-		log.Fatalf("Error converting numberOfTurns to int: %v\n", err)
+		return SimSettingsData{}, err
 	}
 	return SimSettingsData{
 		numberOfSims:  numSims,
 		numberOfTurns: numTurns,
 		Drops:         drops,
-	}
+	}, nil
+}
+
+func (s SimSettingsData) Simulate(runSim func()) bool {
+	return true
 }
