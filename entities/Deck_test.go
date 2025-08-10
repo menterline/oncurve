@@ -6,9 +6,9 @@ import (
 
 func TestNewDeck(t *testing.T) {
 	testData := SimSettingsData{
-		NumberOfSims:  1000,
-		NumberOfTurns: 10,
-		Drops: map[int]int{
+		numberOfSims:  1000,
+		numberOfTurns: 10,
+		drops: map[int]int{
 			1: 7,
 			2: 6,
 			3: 4,

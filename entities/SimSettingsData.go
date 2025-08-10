@@ -10,12 +10,11 @@ import (
 
 /*
 data class representing selection of data by the user
-TODO we can make these fields private, but need to update Deck_test to use the factory
 */
 type SimSettingsData struct {
-	NumberOfSims  int
-	NumberOfTurns int
-	Drops         map[int]int
+	numberOfSims  int
+	numberOfTurns int
+	drops         map[int]int
 }
 
 func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
@@ -42,33 +41,33 @@ func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
 		return SimSettingsData{}, err
 	}
 	return SimSettingsData{
-		NumberOfSims:  numSims,
-		NumberOfTurns: numTurns,
-		Drops:         drops,
+		numberOfSims:  numSims,
+		numberOfTurns: numTurns,
+		drops:         drops,
 	}, nil
 }
 
 func (s SimSettingsData) GetNumberOfSims() int {
-	return s.NumberOfSims
+	return s.numberOfSims
 }
 
 func (s SimSettingsData) GetNumberOfTurns() int {
-	return s.NumberOfTurns
+	return s.numberOfTurns
 }
 
 func (s SimSettingsData) GetNumberOfSpells() int {
 	spellCount := 0
-	for _, value := range s.Drops {
+	for _, value := range s.drops {
 		spellCount += value
 	}
 	return spellCount
 }
 
 func (s SimSettingsData) GetListOfSpells() []BasicSpell {
-	spells := make([]BasicSpell, 0, len(s.Drops))
+	spells := make([]BasicSpell, 0, len(s.drops))
 	orderedListOfDrops := s.getOrderedListOfDrops()
 	for _, cost := range orderedListOfDrops {
-		for i := 0; i < s.Drops[cost]; i++ {
+		for i := 0; i < s.drops[cost]; i++ {
 			spells = append(spells, BasicSpell{cost: cost})
 		}
 	}
@@ -76,8 +75,8 @@ func (s SimSettingsData) GetListOfSpells() []BasicSpell {
 }
 
 func (s SimSettingsData) getOrderedListOfDrops() []int {
-	dropValues := make([]int, 0, len(s.Drops))
-	for cost, numSpellsAtCost := range s.Drops {
+	dropValues := make([]int, 0, len(s.drops))
+	for cost, numSpellsAtCost := range s.drops {
 		if numSpellsAtCost > 0 {
 			dropValues = append(dropValues, cost)
 		}

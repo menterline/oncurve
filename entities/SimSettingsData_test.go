@@ -30,17 +30,17 @@ func TestFactory(t *testing.T) {
 	if result.GetNumberOfTurns() != 10 {
 		t.Errorf("Expected numberOfTurns to be '10', got '%d'", result.GetNumberOfTurns())
 	}
-	if len(result.Drops) != 3 {
-		t.Errorf("Expected 3 drops, got %d", len(result.Drops))
+	if len(result.drops) != 3 {
+		t.Errorf("Expected 3 drops, got %d", len(result.drops))
 	}
-	if result.Drops[1] != 4 {
-		t.Errorf("Expected 1drops to be '4', got '%d'", result.Drops[1])
+	if result.drops[1] != 4 {
+		t.Errorf("Expected 1drops to be '4', got '%d'", result.drops[1])
 	}
-	if result.Drops[2] != 3 {
-		t.Errorf("Expected 2drops to be '3', got '%d'", result.Drops[2])
+	if result.drops[2] != 3 {
+		t.Errorf("Expected 2drops to be '3', got '%d'", result.drops[2])
 	}
-	if result.Drops[5] != 1 {
-		t.Errorf("Expected 5drops to be '1', got '%d'", result.Drops[5])
+	if result.drops[5] != 1 {
+		t.Errorf("Expected 5drops to be '1', got '%d'", result.drops[5])
 	}
 }
 
