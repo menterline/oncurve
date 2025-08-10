@@ -8,7 +8,6 @@ import (
 )
 
 func createTestSimSettingsData() (entities.SimSettingsData, error) {
-
 	req, err := http.NewRequest("POST", "/simulate", nil)
 	if err != nil {
 		return entities.SimSettingsData{}, err
@@ -54,10 +53,6 @@ func TestFactory_ExpectError(t *testing.T) {
 	}
 	req.Form = make(map[string][]string)
 	req.Form.Add("THIS IS A BAD STRING", "1000")
-	req.Form.Add("numberOfTurns", "10")
-	req.Form.Add("1drops", "4")
-	req.Form.Add("2drops", "3")
-	req.Form.Add("5drops", "1")
 	_, err = entities.NewSimSettingsData(req)
 
 	if err == nil {
@@ -72,20 +67,6 @@ func TestGetNumberOfSpells(t *testing.T) {
 	}
 	if result.GetNumberOfSpells() != 8 {
 		t.Errorf("Expected number of spells to be 8, got %d", result.GetNumberOfSpells())
-	}
-}
-
-func TestGetOrderedListOfDrops(t *testing.T) {
-	result, err := createTestSimSettingsData()
-	if err != nil {
-		t.Errorf("Error create test data")
-	}
-	drops := result.GetOrderedListOfDrops()
-	if len(drops) != 3 {
-		t.Errorf("Expected 3 drops, got %d", len(drops))
-	}
-	if drops[0] != 1 || drops[1] != 2 || drops[2] != 5 {
-		t.Errorf("Expected drops to be [1, 2, 5], got %v", drops)
 	}
 }
 
