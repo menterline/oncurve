@@ -14,6 +14,7 @@ func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {
 	failures := 0
 	for i := 0; i < simData.GetNumberOfSims(); i++ {
 		deck := entities.NewDeck(simData)
+		deck.Shuffle()
 		result := RunSimulation(simData.GetNumberOfTurns(), deck)
 		if result {
 			successes++

@@ -49,5 +49,23 @@ func TestDraw(t *testing.T) {
 	testCards[2] = entities.NewBasicSpell(2)
 	testCards[3] = entities.NewBasicSpell(1)
 	testCards[4] = entities.NewBasicSpell(3)
-
+	deck, _ := entities.NewDeckFromCards(testCards[:])
+	newCard, _ := deck.Draw()
+	if deck.GetSize() != 4 {
+		t.Errorf("Expected deck size to be 4 after drawing one card, got %d", deck.GetSize())
+	}
+	if newCard.GetCardType() != entities.Land {
+		t.Errorf("Expected drawn card to be a land, got %d", newCard.GetCardType())
+	}
+	deck.Draw()
+	newCard, _ = deck.Draw()
+	if deck.GetSize() != 2 {
+		t.Errorf("Expected deck size to be 2 after drawing two more cards, got %d", deck.GetSize())
+	}
+	if newCard.GetCardType() != entities.Spell {
+		t.Errorf("Expected drawn card to be a land, got %d", newCard.GetCardType())
+	}
+	if newCard.GetManaCost() != 2 {
+		t.Errorf("Expected drawn card to be cost 2, got %d", newCard.GetManaCost())
+	}
 }

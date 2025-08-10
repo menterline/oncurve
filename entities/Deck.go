@@ -13,8 +13,8 @@ type Deck struct {
 const MAX_DECK_SIZE = 60
 
 /*
-when building the deck, we need a list of spells, and a list of lands,
-then randomly merge them together
+when building the deck, we need a list of spells, and a list of lands
+combine them into a deck - NOT SHUFFLED
 */
 func NewDeck(s SimSettingsData) Deck {
 	spells := s.GetListOfSpells()
@@ -26,10 +26,19 @@ func NewDeck(s SimSettingsData) Deck {
 	for _, land := range lands {
 		tempDeck = append(tempDeck, land)
 	}
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	r.Shuffle(len(tempDeck), func(i, j int) { tempDeck[i], tempDeck[j] = tempDeck[j], tempDeck[i] })
 	return Deck{cards: tempDeck}
+}
 
+func NewDeckFromCards(cards []Card) (Deck, error) {
+	if len(cards) > MAX_DECK_SIZE {
+		return Deck{}, errors.New("Deck cannot have more than 60 cards")
+	}
+	return Deck{cards: cards}, nil
+}
+
+func (d *Deck) Shuffle() {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	r.Shuffle(len(d.cards), func(i, j int) { d.cards[i], d.cards[j] = d.cards[j], d.cards[i] })
 }
 
 func (d Deck) GetSize() int {
