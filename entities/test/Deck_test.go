@@ -1,4 +1,4 @@
-package entities
+package entities_test
 
 import (
 	"testing"
@@ -23,6 +23,23 @@ func TestNewDeck(t *testing.T) {
 	if deck.GetSize() != 60 {
 		t.Errorf("Expected deck length to be 60, got %d", deck.GetSize())
 	}
+	spellCount := 0
+	landCount := 0
+	for _, card := range deck.GetCards() {
+		if card.GetCardType() == entities.Spell {
+			spellCount++
+		}
+		if card.GetCardType() == entities.Land {
+			landCount++
+		}
+	}
+	if spellCount != 25 {
+		t.Errorf("Expected 25 spells, got %d", spellCount)
+	}
+	if landCount != 35 {
+		t.Errorf("Expected 35 lands, got %d", landCount)
+	}
+
 }
 
 func TestDraw(t *testing.T) {

@@ -10,6 +10,7 @@ import (
 
 /*
 data class representing selection of data by the user
+TODO we can make these fields private, but need to update Deck_test to use the factory
 */
 type SimSettingsData struct {
 	NumberOfSims  int
