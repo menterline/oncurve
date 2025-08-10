@@ -1,13 +1,11 @@
-package entities_test
+package entities
 
 import (
 	"testing"
-
-	"github.com/menterline/oncurve/entities"
 )
 
 func TestNewDeck(t *testing.T) {
-	testData := entities.SimSettingsData{
+	testData := SimSettingsData{
 		NumberOfSims:  1000,
 		NumberOfTurns: 10,
 		Drops: map[int]int{
@@ -19,17 +17,17 @@ func TestNewDeck(t *testing.T) {
 			6: 3,
 		},
 	}
-	deck := entities.NewDeck(testData)
+	deck := NewDeck(testData)
 	if deck.GetSize() != 60 {
 		t.Errorf("Expected deck length to be 60, got %d", deck.GetSize())
 	}
 	spellCount := 0
 	landCount := 0
 	for _, card := range deck.GetCards() {
-		if card.GetCardType() == entities.Spell {
+		if card.GetCardType() == Spell {
 			spellCount++
 		}
-		if card.GetCardType() == entities.Land {
+		if card.GetCardType() == Land {
 			landCount++
 		}
 	}
@@ -43,18 +41,18 @@ func TestNewDeck(t *testing.T) {
 }
 
 func TestDraw(t *testing.T) {
-	testCards := [5]entities.Card{}
-	testCards[0] = entities.BasicLand{}
-	testCards[1] = entities.BasicLand{}
-	testCards[2] = entities.NewBasicSpell(2)
-	testCards[3] = entities.NewBasicSpell(1)
-	testCards[4] = entities.NewBasicSpell(3)
-	deck, _ := entities.NewDeckFromCards(testCards[:])
+	testCards := [5]Card{}
+	testCards[0] = BasicLand{}
+	testCards[1] = BasicLand{}
+	testCards[2] = NewBasicSpell(2)
+	testCards[3] = NewBasicSpell(1)
+	testCards[4] = NewBasicSpell(4)
+	deck := Deck{cards: testCards[:]}
 	newCard, _ := deck.Draw()
 	if deck.GetSize() != 4 {
 		t.Errorf("Expected deck size to be 4 after drawing one card, got %d", deck.GetSize())
 	}
-	if newCard.GetCardType() != entities.Land {
+	if newCard.GetCardType() != Land {
 		t.Errorf("Expected drawn card to be a land, got %d", newCard.GetCardType())
 	}
 	deck.Draw()
@@ -62,7 +60,7 @@ func TestDraw(t *testing.T) {
 	if deck.GetSize() != 2 {
 		t.Errorf("Expected deck size to be 2 after drawing two more cards, got %d", deck.GetSize())
 	}
-	if newCard.GetCardType() != entities.Spell {
+	if newCard.GetCardType() != Spell {
 		t.Errorf("Expected drawn card to be a land, got %d", newCard.GetCardType())
 	}
 	if newCard.GetManaCost() != 2 {

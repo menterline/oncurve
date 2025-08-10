@@ -29,13 +29,6 @@ func NewDeck(s SimSettingsData) Deck {
 	return Deck{cards: tempDeck}
 }
 
-func NewDeckFromCards(cards []Card) (Deck, error) {
-	if len(cards) > MAX_DECK_SIZE {
-		return Deck{}, errors.New("Deck cannot have more than 60 cards")
-	}
-	return Deck{cards: cards}, nil
-}
-
 func (d *Deck) Shuffle() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	r.Shuffle(len(d.cards), func(i, j int) { d.cards[i], d.cards[j] = d.cards[j], d.cards[i] })

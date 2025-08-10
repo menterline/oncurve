@@ -3,14 +3,12 @@ package entities
 import (
 	"net/http"
 	"testing"
-
-	"github.com/menterline/oncurve/entities"
 )
 
-func createTestSimSettingsData() (entities.SimSettingsData, error) {
+func createTestSimSettingsData() (SimSettingsData, error) {
 	req, err := http.NewRequest("POST", "/simulate", nil)
 	if err != nil {
-		return entities.SimSettingsData{}, err
+		return SimSettingsData{}, err
 	}
 	req.Form = make(map[string][]string)
 	req.Form.Add("numberOfSims", "1000")
@@ -18,7 +16,7 @@ func createTestSimSettingsData() (entities.SimSettingsData, error) {
 	req.Form.Add("1drops", "4")
 	req.Form.Add("2drops", "3")
 	req.Form.Add("5drops", "1")
-	return entities.NewSimSettingsData(req)
+	return NewSimSettingsData(req)
 }
 
 func TestFactory(t *testing.T) {
@@ -53,7 +51,7 @@ func TestFactory_ExpectError(t *testing.T) {
 	}
 	req.Form = make(map[string][]string)
 	req.Form.Add("THIS IS A BAD STRING", "1000")
-	_, err = entities.NewSimSettingsData(req)
+	_, err = NewSimSettingsData(req)
 
 	if err == nil {
 		t.Error("Expected an error due to bad string in form, but got none")
