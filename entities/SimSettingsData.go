@@ -1,35 +1,30 @@
 package entities
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
 )
 
 type SimSettingsData struct {
-	numberOfSims  int
-	numberOfTurns int
-	Drops         map[string]int
-}
-
-func (s SimSettingsData) GetNumberOfSims() int {
-	return s.numberOfSims
-}
-
-func (s SimSettingsData) GetNumberOfTurns() int {
-	return s.numberOfTurns
+	NumberOfSims  int
+	NumberOfTurns int
+	Drops         map[int]int
 }
 
 func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
-	drops := make(map[string]int)
+	drops := make(map[int]int)
 	for key, values := range req.Form {
 		if strings.Contains(key, "drops") && len(values) > 0 {
 			res, err := strconv.Atoi(values[0])
 			if err != nil {
-				log.Fatalf("Error converting %s to int: %v\n", values[0], err)
+				return SimSettingsData{}, err
 			}
-			drops[key] = res
+			intKey, err := strconv.Atoi(strings.TrimSuffix(key, "drops"))
+			if err != nil {
+				return SimSettingsData{}, err
+			}
+			drops[intKey] = res
 		}
 	}
 	numSims, err := strconv.Atoi(req.Form.Get("numberOfSims"))
@@ -41,12 +36,24 @@ func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
 		return SimSettingsData{}, err
 	}
 	return SimSettingsData{
-		numberOfSims:  numSims,
-		numberOfTurns: numTurns,
+		NumberOfSims:  numSims,
+		NumberOfTurns: numTurns,
 		Drops:         drops,
 	}, nil
 }
 
-func (s SimSettingsData) Simulate(runSim func()) bool {
-	return true
+func (s SimSettingsData) GetNumberOfSims() int {
+	return s.NumberOfSims
+}
+
+func (s SimSettingsData) GetNumberOfTurns() int {
+	return s.NumberOfTurns
+}
+
+func (s SimSettingsData) GetNumberOfSpells() int {
+	spellCount := 0
+	for _, value := range s.Drops {
+		spellCount += value
+	}
+	return spellCount
 }

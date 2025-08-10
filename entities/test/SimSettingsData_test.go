@@ -7,11 +7,11 @@ import (
 	"github.com/menterline/oncurve/entities"
 )
 
-func TestFormToMap(t *testing.T) {
-	// Create a mock HTTP request with form values
+func createTestSimSettingsData() (entities.SimSettingsData, error) {
+
 	req, err := http.NewRequest("POST", "/simulate", nil)
 	if err != nil {
-		t.Fatalf("Failed to create request: %v", err)
+		return entities.SimSettingsData{}, err
 	}
 	req.Form = make(map[string][]string)
 	req.Form.Add("numberOfSims", "1000")
@@ -19,10 +19,14 @@ func TestFormToMap(t *testing.T) {
 	req.Form.Add("1drops", "4")
 	req.Form.Add("2drops", "3")
 	req.Form.Add("5drops", "1")
-	// Call the factory function
-	result, err := entities.NewSimSettingsData(req)
+	return entities.NewSimSettingsData(req)
+}
 
-	// Check if the result contains the expected keys and values
+func TestFactory(t *testing.T) {
+	result, err := createTestSimSettingsData()
+	if err != nil {
+		t.Errorf("Error create test data")
+	}
 	if result.GetNumberOfSims() != 1000 {
 		t.Errorf("Expected numberOfSims to be '1000', got '%d'", result.GetNumberOfSims())
 	}
@@ -32,20 +36,18 @@ func TestFormToMap(t *testing.T) {
 	if len(result.Drops) != 3 {
 		t.Errorf("Expected 3 drops, got %d", len(result.Drops))
 	}
-	if result.Drops["1drops"] != 4 {
-		t.Errorf("Expected 1drops to be '4', got '%d'", result.Drops["1drops"])
+	if result.Drops[1] != 4 {
+		t.Errorf("Expected 1drops to be '4', got '%d'", result.Drops[1])
 	}
-	if result.Drops["2drops"] != 3 {
-		t.Errorf("Expected 2drops to be '3', got '%d'", result.Drops["2drops"])
+	if result.Drops[2] != 3 {
+		t.Errorf("Expected 2drops to be '3', got '%d'", result.Drops[2])
 	}
-	if result.Drops["5drops"] != 1 {
-		t.Errorf("Expected 5drops to be '1', got '%d'", result.Drops["5drops"])
+	if result.Drops[5] != 1 {
+		t.Errorf("Expected 5drops to be '1', got '%d'", result.Drops[5])
 	}
-
 }
 
-func TestFormToMap_ExpectError(t *testing.T) {
-	// Create a mock HTTP request with form values
+func TestFactory_ExpectError(t *testing.T) {
 	req, err := http.NewRequest("POST", "/simulate", nil)
 	if err != nil {
 		t.Fatalf("Failed to create request: %v", err)
@@ -61,5 +63,14 @@ func TestFormToMap_ExpectError(t *testing.T) {
 	if err == nil {
 		t.Error("Expected an error due to bad string in form, but got none")
 	}
+}
 
+func TestGetNumberOfSpells(t *testing.T) {
+	result, err := createTestSimSettingsData()
+	if err != nil {
+		t.Errorf("Error create test data")
+	}
+	if result.GetNumberOfSpells() != 8 {
+		t.Errorf("Expected number of spells to be 8, got %d", result.GetNumberOfSpells())
+	}
 }

@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"github.com/menterline/oncurve/entities"
 )
 
@@ -15,20 +13,21 @@ func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {
 	successes := 0
 	failures := 0
 	for i := 0; i < simData.GetNumberOfSims(); i++ {
-		result := simData.Simulate(RunSimulation)
+		deck := entities.NewDeck(simData)
+		result := RunSimulation(simData.GetNumberOfTurns(), deck)
 		if result {
 			successes++
 		} else {
 			failures++
 		}
 	}
-	fmt.Println(simData)
 	return SimulationResult{
 		Successes: successes,
 		Failures:  failures,
 	}
 }
 
-func RunSimulation() {
-
+// TODO
+func RunSimulation(numHands int, deck entities.Deck) bool {
+	return true
 }
