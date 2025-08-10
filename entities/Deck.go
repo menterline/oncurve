@@ -6,6 +6,10 @@ type Deck struct {
 	cards []Card
 }
 
+/*
+when building the deck, we need a list of spells, and a list of lands,
+then randomly merge them together
+*/
 func NewDeck(s SimSettingsData) Deck {
 	return Deck{cards: []Card{}}
 

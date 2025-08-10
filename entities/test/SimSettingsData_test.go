@@ -74,3 +74,39 @@ func TestGetNumberOfSpells(t *testing.T) {
 		t.Errorf("Expected number of spells to be 8, got %d", result.GetNumberOfSpells())
 	}
 }
+
+func TestGetOrderedListOfDrops(t *testing.T) {
+	result, err := createTestSimSettingsData()
+	if err != nil {
+		t.Errorf("Error create test data")
+	}
+	drops := result.GetOrderedListOfDrops()
+	if len(drops) != 3 {
+		t.Errorf("Expected 3 drops, got %d", len(drops))
+	}
+	if drops[0] != 1 || drops[1] != 2 || drops[2] != 5 {
+		t.Errorf("Expected drops to be [1, 2, 5], got %v", drops)
+	}
+}
+
+func TestGetListOfSpells(t *testing.T) {
+	result, err := createTestSimSettingsData()
+	if err != nil {
+		t.Errorf("Error create test data")
+	}
+	spells := result.GetListOfSpells()
+	if len(spells) != 8 {
+		t.Errorf("Expected 8 spells, got %d", len(spells))
+	}
+	for i, spell := range spells {
+		if i < 4 && spell.GetManaCost() != 1 {
+			t.Errorf("Expected spell %d to have mana cost %d, got %d", i, 1, spell.GetManaCost())
+		}
+		if i > 3 && i < 7 && spell.GetManaCost() != 2 {
+			t.Errorf("Expected spell %d to have mana cost %d, got %d", i, 2, spell.GetManaCost())
+		}
+		if i == 7 && spell.GetManaCost() != 5 {
+			t.Errorf("Expected spell %d to have mana cost %d, got %d", i, 5, spell.GetManaCost())
+		}
+	}
+}
