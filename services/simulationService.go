@@ -12,10 +12,10 @@ type SimulationResult struct {
 func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {
 	successes := 0
 	failures := 0
-	for i := 0; i < simData.GetNumberOfSims(); i++ {
+	for i := 0; i < simData.NumberOfSims; i++ {
 		deck := entities.NewDeck(simData)
 		deck.Shuffle()
-		result := RunSimulation(simData.GetNumberOfTurns(), deck)
+		result := RunSimulation(simData.NumberOfTurns, deck)
 		if result {
 			successes++
 		} else {

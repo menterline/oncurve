@@ -6,9 +6,9 @@ import (
 
 func TestNewDeck(t *testing.T) {
 	testData := SimSettingsData{
-		numberOfSims:  1000,
-		numberOfTurns: 10,
-		drops: map[int]int{
+		NumberOfSims:  1000,
+		NumberOfTurns: 10,
+		Drops: map[int]int{
 			1: 7,
 			2: 6,
 			3: 4,
@@ -47,7 +47,7 @@ func TestDraw(t *testing.T) {
 	testCards[2] = NewBasicSpell(2)
 	testCards[3] = NewBasicSpell(1)
 	testCards[4] = NewBasicSpell(4)
-	deck := Deck{cards: testCards[:]}
+	deck := Deck{Cards: testCards[:]}
 	newCard, _ := deck.Draw()
 	if deck.GetSize() != 4 {
 		t.Errorf("Expected deck size to be 4 after drawing one card, got %d", deck.GetSize())

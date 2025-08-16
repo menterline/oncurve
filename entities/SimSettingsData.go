@@ -12,9 +12,9 @@ import (
 data class representing selection of data by the user
 */
 type SimSettingsData struct {
-	numberOfSims  int
-	numberOfTurns int
-	drops         map[int]int
+	NumberOfSims  int
+	NumberOfTurns int
+	Drops         map[int]int
 }
 
 func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
@@ -41,33 +41,25 @@ func NewSimSettingsData(req *http.Request) (SimSettingsData, error) {
 		return SimSettingsData{}, err
 	}
 	return SimSettingsData{
-		numberOfSims:  numSims,
-		numberOfTurns: numTurns,
-		drops:         drops,
+		NumberOfSims:  numSims,
+		NumberOfTurns: numTurns,
+		Drops:         drops,
 	}, nil
-}
-
-func (s SimSettingsData) GetNumberOfSims() int {
-	return s.numberOfSims
-}
-
-func (s SimSettingsData) GetNumberOfTurns() int {
-	return s.numberOfTurns
 }
 
 func (s SimSettingsData) GetNumberOfSpells() int {
 	spellCount := 0
-	for _, value := range s.drops {
+	for _, value := range s.Drops {
 		spellCount += value
 	}
 	return spellCount
 }
 
 func (s SimSettingsData) GetListOfSpells() []BasicSpell {
-	spells := make([]BasicSpell, 0, len(s.drops))
+	spells := make([]BasicSpell, 0, len(s.Drops))
 	orderedListOfDrops := s.getOrderedListOfDrops()
 	for _, cost := range orderedListOfDrops {
-		for i := 0; i < s.drops[cost]; i++ {
+		for i := 0; i < s.Drops[cost]; i++ {
 			spells = append(spells, BasicSpell{cost: cost})
 		}
 	}
@@ -75,8 +67,8 @@ func (s SimSettingsData) GetListOfSpells() []BasicSpell {
 }
 
 func (s SimSettingsData) getOrderedListOfDrops() []int {
-	dropValues := make([]int, 0, len(s.drops))
-	for cost, numSpellsAtCost := range s.drops {
+	dropValues := make([]int, 0, len(s.Drops))
+	for cost, numSpellsAtCost := range s.Drops {
 		if numSpellsAtCost > 0 {
 			dropValues = append(dropValues, cost)
 		}

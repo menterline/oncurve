@@ -7,7 +7,7 @@ import (
 )
 
 type Deck struct {
-	cards []Card
+	Cards []Card
 }
 
 const MAX_DECK_SIZE = 60
@@ -26,27 +26,27 @@ func NewDeck(s SimSettingsData) Deck {
 	for _, land := range lands {
 		tempDeck = append(tempDeck, land)
 	}
-	return Deck{cards: tempDeck}
+	return Deck{Cards: tempDeck}
 }
 
 func (d *Deck) Shuffle() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	r.Shuffle(len(d.cards), func(i, j int) { d.cards[i], d.cards[j] = d.cards[j], d.cards[i] })
+	r.Shuffle(len(d.Cards), func(i, j int) { d.Cards[i], d.Cards[j] = d.Cards[j], d.Cards[i] })
 }
 
 func (d Deck) GetSize() int {
-	return len(d.cards)
+	return len(d.Cards)
 }
 
 func (d Deck) GetCards() []Card {
-	return d.cards
+	return d.Cards
 }
 
 func (d *Deck) Draw() (Card, error) {
-	if len(d.cards) == 0 {
+	if len(d.Cards) == 0 {
 		return nil, errors.New("No cards left in deck")
 	}
-	topDeck := d.cards[0]
-	d.cards = d.cards[1:]
+	topDeck := d.Cards[0]
+	d.Cards = d.Cards[1:]
 	return topDeck, nil
 }
