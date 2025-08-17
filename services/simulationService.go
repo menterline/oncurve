@@ -28,7 +28,20 @@ func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {
 	}
 }
 
-// TODO
-func RunSimulation(numHands int, deck entities.Deck) bool {
+/*
+DFS to see if there is a path that succeeds
+*/
+func RunSimulation(numTurns int, deck entities.Deck) bool {
+
+	/*
+		 while currentHandNumber < numTurns {
+			draw
+				if no lands, return false
+				if no spells, return false
+	*/
+	return false
+}
+
+func onCurveDFS(currentHandNumber int, numberOfTurns int, deck entities.Deck, boardState entities.BoardState) bool {
 	return true
 }
