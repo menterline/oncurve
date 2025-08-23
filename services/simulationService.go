@@ -51,14 +51,13 @@ func onCurveDFS(numberOfTurns int, hand entities.Hand, deck entities.Deck, board
 	for _, play := range plays {
 		hand.PlayCard(play, boardState)
 		if boardState.GetNumUntappedLands() == 0 {
-			// Got to end of turn, used up all the lands, start new turn
-			boardState.UntapLands()
+			// Used up all lands, so start next turn
+			boardState.NextTurn()
 			newCard, err := deck.Draw()
 			if err != nil {
 				return false
 			}
 			hand.Cards = append(hand.Cards, newCard)
-			boardState.NextTurn()
 			if onCurveDFS(numberOfTurns, hand, deck, boardState) {
 				return true
 			}

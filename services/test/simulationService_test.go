@@ -19,10 +19,22 @@ func TestRunSimulationDeckAllLands_ExpectFalse(t *testing.T) {
 	}
 }
 
-func TestRunSimulationDeckAllSpells_ExpectFalse(t *testing.T) {
+func TestRunSimulationDeckAllZeroCostSpells_ExpectTrue(t *testing.T) {
 	cards := make([]entities.Card, entities.MAX_DECK_SIZE)
 	for i := 0; i < entities.MAX_DECK_SIZE; i++ {
 		cards[i] = entities.BasicSpell{}
+	}
+	deck := entities.Deck{Cards: cards}
+	result := services.RunSimulation(1, deck)
+	if result != true {
+		t.Errorf("Expected true, got %t", result)
+	}
+}
+
+func TestRunSimulationDeckAllNonZeroCostSpells_ExpectFalse(t *testing.T) {
+	cards := make([]entities.Card, entities.MAX_DECK_SIZE)
+	for i := 0; i < entities.MAX_DECK_SIZE; i++ {
+		cards[i] = entities.NewBasicSpell(1)
 	}
 	deck := entities.Deck{Cards: cards}
 	result := services.RunSimulation(1, deck)
