@@ -18,11 +18,10 @@ func (hand *Hand) PlayCard(card Card, boardState *BoardState) {
 	card.Play(boardState)
 }
 
-func AvailablePlays(hand Hand, boardState BoardState, turnNumber int) []Card {
+func AvailablePlays(hand Hand, boardState BoardState) []Card {
 	available := make([]Card, 0, len(hand.Cards))
 	for _, card := range hand.Cards {
-		// TODO can add interface method on card canPlay(boardState)bool
-		if (card.GetCardType() == Land && boardState.CanPlayLand(turnNumber)) || (card.GetCardType() == Spell && boardState.CanPlaySpell(card)) {
+		if card.CanPlay(boardState) {
 			available = append(available, card)
 		}
 	}

@@ -1,11 +1,16 @@
 package entities
 
 type BoardState struct {
-	Lands []BasicLand
+	TurnIndex int
+	Lands     []BasicLand
 }
 
 func (b *BoardState) AddLand(land BasicLand) {
 	b.Lands = append(b.Lands, land)
+}
+
+func (b *BoardState) NextTurn() {
+	b.TurnIndex++
 }
 
 func (b BoardState) CanPlaySpell(card Card) bool {

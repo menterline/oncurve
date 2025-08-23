@@ -23,6 +23,13 @@ func (b *BasicLand) Untap() {
 	b.isTapped = false
 }
 
+func (b BasicLand) CanPlay(boardState BoardState) bool {
+	if len(boardState.Lands) <= boardState.TurnIndex {
+		return true
+	}
+	return false
+}
+
 func (b BasicLand) Play(boardState *BoardState) {
 	boardState.AddLand(b)
 }
