@@ -50,3 +50,15 @@ func (d *Deck) Draw() (Card, error) {
 	d.Cards = d.Cards[1:]
 	return topDeck, nil
 }
+
+func (d *Deck) DrawMultiple(num int) ([]Card, error) {
+	cards := make([]Card, 0, num)
+	for i := 0; i < num; i++ {
+		card, err := d.Draw()
+		if err != nil {
+			return nil, err
+		}
+		cards = append(cards, card)
+	}
+	return cards, nil
+}

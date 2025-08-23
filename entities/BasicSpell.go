@@ -7,6 +7,7 @@ type BasicSpell struct {
 func NewBasicSpell(cost int) BasicSpell {
 	return BasicSpell{cost: cost}
 }
+
 func (b BasicSpell) GetManaCost() int {
 	return b.cost
 }

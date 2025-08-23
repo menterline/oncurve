@@ -32,16 +32,42 @@ func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {
 DFS to see if there is a path that succeeds
 */
 func RunSimulation(numTurns int, deck entities.Deck) bool {
-
-	/*
-		 while currentHandNumber < numTurns {
-			draw
-				if no lands, return false
-				if no spells, return false
-	*/
-	return false
+	startingHandCards, err := deck.DrawMultiple(7)
+	if err != nil {
+		return false
+	}
+	startingHand := entities.Hand{Cards: startingHandCards}
+	return onCurveDFS(0, numTurns, startingHand, deck, &entities.BoardState{})
 }
 
-func onCurveDFS(currentHandNumber int, numberOfTurns int, deck entities.Deck, boardState entities.BoardState) bool {
-	return true
+func onCurveDFS(currentHandNumber int, numberOfTurns int, hand entities.Hand, deck entities.Deck, boardState *entities.BoardState) bool {
+	if len(boardState.Lands) > currentHandNumber {
+		return false
+	}
+	if currentHandNumber >= numberOfTurns {
+		return true
+	}
+	plays := entities.AvailablePlays(hand, *boardState, currentHandNumber)
+	if len(plays) == 0 && boardState.GetNumUntappedLands() != 0 {
+		return false
+	}
+	for _, play := range plays {
+		hand.PlayCard(play, boardState)
+		if boardState.GetNumUntappedLands() == 0 {
+			boardState.UntapLands()
+			newCard, err := deck.Draw()
+			if err != nil {
+				return false
+			}
+			hand.Cards = append(hand.Cards, newCard)
+			if onCurveDFS(currentHandNumber+1, numberOfTurns, hand, deck, boardState) {
+				return true
+			}
+		} else {
+			if onCurveDFS(currentHandNumber, numberOfTurns, hand, deck, boardState) {
+				return true
+			}
+		}
+	}
+	return false
 }

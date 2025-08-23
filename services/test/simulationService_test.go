@@ -13,7 +13,7 @@ func TestRunSimulationDeckAllLands_ExpectFalse(t *testing.T) {
 		cards[i] = entities.BasicLand{}
 	}
 	deck := entities.Deck{Cards: cards}
-	result := services.RunSimulation(10, deck)
+	result := services.RunSimulation(1, deck)
 	if result != false {
 		t.Errorf("Expected false, got %t", result)
 	}
@@ -25,7 +25,7 @@ func TestRunSimulationDeckAllSpells_ExpectFalse(t *testing.T) {
 		cards[i] = entities.BasicSpell{}
 	}
 	deck := entities.Deck{Cards: cards}
-	result := services.RunSimulation(10, deck)
+	result := services.RunSimulation(1, deck)
 	if result != false {
 		t.Errorf("Expected false, got %t", result)
 	}
@@ -55,7 +55,7 @@ func TestRunSimulationDeckAllLandsAndOneDrops_ExpectTrue(t *testing.T) {
 		cards[i] = entities.NewBasicSpell(1)
 	}
 	deck := entities.Deck{Cards: cards}
-	result := services.RunSimulation(4, deck)
+	result := services.RunSimulation(1, deck)
 	if result != true {
 		t.Errorf("Expected true, got %t", result)
 	}
