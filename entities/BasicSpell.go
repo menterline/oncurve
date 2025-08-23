@@ -29,12 +29,5 @@ func (card BasicSpell) CanPlay(boardState BoardState) bool {
 }
 
 func (card BasicSpell) Play(boardState *BoardState) {
-	tappedLands := 0
-	for _, land := range boardState.Lands {
-		if !land.IsTapped() && card.GetManaCost() > tappedLands {
-			land.Tap()
-			tappedLands++
-			break
-		}
-	}
+	boardState.TapLands(card.GetManaCost())
 }
