@@ -41,9 +41,6 @@ func RunSimulation(numTurns int, deck entities.Deck) bool {
 }
 
 func onCurveDFS(currentHandNumber int, numberOfTurns int, hand entities.Hand, deck entities.Deck, boardState *entities.BoardState) bool {
-	if len(boardState.Lands) > currentHandNumber {
-		return false
-	}
 	if currentHandNumber >= numberOfTurns {
 		return true
 	}
@@ -54,6 +51,7 @@ func onCurveDFS(currentHandNumber int, numberOfTurns int, hand entities.Hand, de
 	for _, play := range plays {
 		hand.PlayCard(play, boardState)
 		if boardState.GetNumUntappedLands() == 0 {
+			// Got to end of turn, used up all the lands, start new turn
 			boardState.UntapLands()
 			newCard, err := deck.Draw()
 			if err != nil {
@@ -64,6 +62,7 @@ func onCurveDFS(currentHandNumber int, numberOfTurns int, hand entities.Hand, de
 				return true
 			}
 		} else {
+			// still have lands left to use
 			if onCurveDFS(currentHandNumber, numberOfTurns, hand, deck, boardState) {
 				return true
 			}

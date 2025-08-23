@@ -24,7 +24,7 @@ func NewDeck(s SimSettingsData) Deck {
 		tempDeck = append(tempDeck, spell)
 	}
 	for _, land := range lands {
-		tempDeck = append(tempDeck, land)
+		tempDeck = append(tempDeck, &land)
 	}
 	return Deck{Cards: tempDeck}
 }

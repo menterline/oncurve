@@ -22,3 +22,7 @@ func (b *BasicLand) Tap() {
 func (b *BasicLand) Untap() {
 	b.isTapped = false
 }
+
+func (b BasicLand) Play(boardState *BoardState) {
+	boardState.AddLand(b)
+}

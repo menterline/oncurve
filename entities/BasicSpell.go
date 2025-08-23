@@ -14,3 +14,14 @@ func (b BasicSpell) GetManaCost() int {
 func (b BasicSpell) GetCardType() CardType {
 	return Spell
 }
+
+func (card BasicSpell) Play(boardState *BoardState) {
+	tappedLands := 0
+	for _, land := range boardState.Lands {
+		if !land.IsTapped() && card.GetManaCost() > tappedLands {
+			land.Tap()
+			tappedLands++
+			break
+		}
+	}
+}

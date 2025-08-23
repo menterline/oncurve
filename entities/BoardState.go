@@ -15,7 +15,7 @@ func (b BoardState) CanPlaySpell(card Card) bool {
 			untappedLands++
 		}
 	}
-	if card.GetManaCost() < untappedLands {
+	if card.GetManaCost() <= untappedLands {
 		return true
 	}
 	return false
