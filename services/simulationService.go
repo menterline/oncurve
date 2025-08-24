@@ -5,8 +5,8 @@ import (
 )
 
 type SimulationResult struct {
-	Successes int `json:"successes"`
-	Failures  int `json:"failures"`
+	Successes int
+	Failures  int
 }
 
 func RunAllSimulations(simData entities.SimSettingsData) SimulationResult {

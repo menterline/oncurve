@@ -1,0 +1,23 @@
+<div>
+    <h2 class="text-2xl flex flex-row justify-center">Simulation Results</h2>
+    <div class="flex flex-col gap-y-4 items-center">
+        <p>Total Simulations: {{ .TotalSims }}</p>
+        <p>Number of Turns: {{ .NumTurns }}</p>
+        <table class="table-auto border-separate border-spacing-2">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Successes</th>
+                    <th class="px-4 py-2">Failures</th>
+                    <th class="px-4 py-2">On Curve %</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border px-4 py-2 text-center">{{ .Successes }}</td>
+                    <td class="border px-4 py-2 text-center">{{ .Failures }}</td>
+                    <td class="border px-4 py-2 text-center">{{ printf "%.2f" .OnCurvePercentage }}%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
