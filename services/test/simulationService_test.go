@@ -74,7 +74,7 @@ func TestRunSimulationDeckAllLandsAndOneDrops_ExpectTrue(t *testing.T) {
 }
 
 func TestRunSimulationHitDrops_ExpectTrue(t *testing.T) {
-	cards := make([]entities.Card, 10)
+	cards := make([]entities.Card, 11)
 	for i := 0; i < 6; i++ {
 		cards[i] = entities.BasicLand{}
 	}
@@ -82,6 +82,7 @@ func TestRunSimulationHitDrops_ExpectTrue(t *testing.T) {
 	cards[7] = entities.NewBasicSpell(2)
 	cards[8] = entities.NewBasicSpell(3)
 	cards[9] = entities.NewBasicSpell(4)
+	cards[10] = entities.BasicLand{}
 	deck := entities.Deck{Cards: cards}
 	result := services.RunSimulation(4, deck)
 	if result != true {
