@@ -37,10 +37,10 @@ func RunSimulation(numTurns int, deck entities.Deck) bool {
 		return false
 	}
 	startingHand := entities.Hand{Cards: startingHandCards}
-	return onCurveDFS(numTurns, startingHand, deck, entities.BoardState{})
+	return onCurveBFS(numTurns, startingHand, deck, entities.BoardState{})
 }
 
-func onCurveDFS(numberOfTurns int, hand entities.Hand, deck entities.Deck, boardState entities.BoardState) bool {
+func onCurveBFS(numberOfTurns int, hand entities.Hand, deck entities.Deck, boardState entities.BoardState) bool {
 	if boardState.TurnIndex >= numberOfTurns {
 		return true
 	}
@@ -49,6 +49,9 @@ func onCurveDFS(numberOfTurns int, hand entities.Hand, deck entities.Deck, board
 		return false
 	}
 	for _, play := range plays {
+		if !play.CanPlay(boardState) {
+			return false
+		}
 		hand.PlayCard(play, &boardState)
 		if boardState.GetNumUntappedLands() == 0 {
 			// Used up all lands, so start next turn
@@ -58,12 +61,12 @@ func onCurveDFS(numberOfTurns int, hand entities.Hand, deck entities.Deck, board
 				return false
 			}
 			hand.Cards = append(hand.Cards, newCard)
-			if onCurveDFS(numberOfTurns, hand, deck, boardState) {
+			if onCurveBFS(numberOfTurns, hand, deck, boardState) {
 				return true
 			}
 		} else {
 			// still have lands left to use
-			if onCurveDFS(numberOfTurns, hand, deck, boardState) {
+			if onCurveBFS(numberOfTurns, hand, deck, boardState) {
 				return true
 			}
 		}
