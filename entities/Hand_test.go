@@ -33,3 +33,81 @@ func TestHand_PlayCard(t *testing.T) {
 		t.Error("Expected hand to have 1 cards after playing land, got", len(hand.Cards))
 	}
 }
+
+func TestAvailablePlays_HasLandOnTurn1_ExpectJustLandPlay(t *testing.T) {
+	hand := Hand{
+		Cards: []Card{
+			BasicLand{},
+			NewBasicSpell(2),
+			NewBasicSpell(1),
+		},
+	}
+
+	boardState := BoardState{
+		Lands:     []BasicLand{},
+		TurnIndex: 0,
+	}
+	available := AvailablePlays(hand, boardState)
+	if len(available) != 1 {
+		t.Errorf("Expected 1 available plays, got %d", len(available))
+	}
+}
+
+func TestAvailablePlays_HasAlreadyPlayedLandOnTurn1_ExpectNoPlays(t *testing.T) {
+	hand := Hand{
+		Cards: []Card{
+			BasicLand{},
+			NewBasicSpell(2),
+			NewBasicSpell(8),
+		},
+	}
+
+	boardState := BoardState{
+		Lands:     []BasicLand{{}},
+		TurnIndex: 0,
+	}
+	available := AvailablePlays(hand, boardState)
+	if len(available) != 0 {
+		t.Errorf("Expected 0 available plays, got %d", len(available))
+	}
+}
+
+func TestAvailablePlays_HasSpellAfterPlayingLand_ExpectOnePlay(t *testing.T) {
+	hand := Hand{
+		Cards: []Card{
+			BasicLand{},
+			NewBasicSpell(2),
+			NewBasicSpell(1),
+		},
+	}
+
+	boardState := BoardState{
+		Lands:     []BasicLand{{}},
+		TurnIndex: 0,
+	}
+	available := AvailablePlays(hand, boardState)
+	if len(available) != 1 {
+		t.Errorf("Expected 1 available plays, got %d", len(available))
+	}
+}
+
+func TestAvailablePlays_HasMultipleLands_ExpectThreePlays(t *testing.T) {
+	hand := Hand{
+		Cards: []Card{
+			BasicLand{},
+			BasicLand{},
+			BasicLand{},
+			NewBasicSpell(2),
+			NewBasicSpell(1),
+		},
+	}
+
+	boardState := BoardState{
+		Lands:     []BasicLand{},
+		TurnIndex: 0,
+	}
+	available := AvailablePlays(hand, boardState)
+	if len(available) != 3 {
+		t.Errorf("Expected 3 available plays, got %d", len(available))
+	}
+}

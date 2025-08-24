@@ -67,7 +67,7 @@ func TestRunSimulationDeckAllLandsAndOneDrops_ExpectTrue(t *testing.T) {
 		cards[i] = entities.NewBasicSpell(1)
 	}
 	deck := entities.Deck{Cards: cards}
-	result := services.RunSimulation(1, deck)
+	result := services.RunSimulation(3, deck)
 	if result != true {
 		t.Errorf("Expected true, got %t", result)
 	}
