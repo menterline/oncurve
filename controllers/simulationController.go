@@ -17,7 +17,6 @@ type SimResults struct {
 	OnCurvePercentage float64
 }
 
-// TODO change this so that the controller parses the request.  service shouldn't know about http
 func SimulateHandler(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
@@ -46,5 +45,4 @@ func SimulateHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// TODO take results and pass to Results/index.html to make look pretty
 }
