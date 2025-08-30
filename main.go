@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+
+	fs := http.FileServer(http.Dir("./public"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", serveIndex)
 	http.HandleFunc("/SimSettings", simsettings.ServeSimSettings)
 	http.HandleFunc("/Simulate", simControllers.SimulateHandler)

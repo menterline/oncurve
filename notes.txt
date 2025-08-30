@@ -2,3 +2,8 @@ TODO
 add favicon
 make design / formatting better
 add button to add new level of drops- instead of hardcoding 1-8
+add CLI version 
+    runtime flag like -t for terminal
+
+support for more intricate cards like B/W
+import deck from MTGA and fetch data on each card
