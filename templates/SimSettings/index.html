@@ -1,67 +1,41 @@
 <form class="flex flex-col items-center gap-y-8" id="OnCurveForm" hx-post="/Simulate" hx-target="#results">
-    <div class="flex flex-row">
-        <div class="flex flex-col gap-y-4">
+    <div class="flex flex-col gap-y-16 ">
+        <section class="flex flex-col gap-y-4 items-center">
             <header class="underline text-xl">Simulation Settings</header>
-            <table class="table-auto border-separate border-spacing-2">
-                <tbody>
-                    <tr>
-                        <td class="w-0 whitespace-nowrap text-lg">
-                            <label for="numberOfSims" class="text-lg">Number of Simulations:</label>
-                        </td>
-                        <td>
-                            <select id="numberOfSims" name="numberOfSims" class="rounded-md w-16 text-black">
-                                <option value="500">500</option>
-                                <optSimulateHandlerion value="1000">1000</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p class="pl-12">This is the number of simulations to run to gather statistics</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="w-0 whitespace-nowrap text-lg">
-                            <label for="numberOfTurns" class="text-lg">Number of Turns:</label>
-                        </td>
-                        <td>
-                            <select id="numberOfTurns" name="numberOfTurns" class="rounded-md w-16 text-black">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <p class="pl-12">This is the number of simulations to run to gather statistics</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="flex flex-col gap-y-4">
+            <div class="flex flex-row gap-x-4 items-center">
+                <div class="flex flex-row gap-x-4 items-center">
+                    <label for="numberOfSims" class="text-lg">Number of Simulations:</label>
+                    <select id="numberOfSims" name="numberOfSims" class="rounded-md w-16 text-black">
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="numberOfTurns" class="text-lg">Number of Turns:</label>
+                    <select id="numberOfTurns" name="numberOfTurns" class="rounded-md w-16 text-black">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+        <section class="flex flex-col gap-y-4 items-center">
             <header class="underline text-xl">Deck Stats</header>
             <p>Input the number of each Converted Mana Cost (CMC) in your deck</p>
-            <table class="table-auto w-1/4 border-separate border-spacing-2 self-end">
-                <tbody>
-                    {{ range .CMCs }}
-                    <tr>
-                        <td class="w-0 whitespace-nowrap text-lg">
-                            <label for="{{ . }}drops" class="text-lg">CMC: {{ . }}</label>
-                        </td>
-                        <td class="w-0 whitespace-nowrap text-lg">
-                            <input type="number" name="{{ . }}drops" id="{{ . }}drops"
-                                class="rounded-md w-16 text-right text-black" value="0">
-                        </td>
-                    </tr>
-                    {{ end}}
-                </tbody>
-            </table>
-        </div>
+            <div class="flex flex-row gap-x-8 items-center">
+                {{ range .CMCs }}
+                <div class="flex flex-col gap-x-4">
+                    <label for="{{ . }}drops" class="text-lg">CMC: {{ . }}</label>
+                    <input type="number" name="{{ . }}drops" id="{{ . }}drops"
+                        class="rounded-md pl-4 w-16 text-left text-black" value="0">
+                </div>
+                {{ end}}
+            </div>
+        </section>
     </div>
     <button type="submit" class="btn bg-indigo-500 w-fit p-2 primary rounded">SUBMIT</button>
 </form>
