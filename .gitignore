@@ -1,0 +1,14 @@
+tmp/
+main
+# Go build outputs
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go test binary
+*.test
+
+# Output of `go build`
+*.out
