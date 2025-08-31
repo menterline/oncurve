@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-y-16 ">
         <section class="flex flex-col gap-y-4 items-center">
             <header class="underline text-xl">Simulation Settings</header>
-            <div class="flex flex-row gap-x-4 items-center">
+            <div class="flex flex-col md:flex-row gap-x-4 items-center">
                 <div class="flex flex-row gap-x-4 items-center">
                     <label for="numberOfSims" class="text-lg">Number of Simulations:</label>
                     <select id="numberOfSims" name="numberOfSims" class="rounded-md w-16 text-black">
@@ -34,6 +34,8 @@
                         class="rounded-md pl-4 w-16 text-left text-black" value="0">
                 </div>
                 {{ end}}
+                <button type="button" class="btn bg-indigo-500 w-fit p-2 primary rounded" hx-get="/AddNewMana"
+                    hx-vals='{"currentMax": "{{ len .CMCs }}"}'>Add Mana Drop</button>
             </div>
         </section>
     </div>

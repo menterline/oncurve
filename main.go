@@ -15,6 +15,7 @@ func main() {
 	http.HandleFunc("/", serveIndex)
 	http.HandleFunc("/SimSettings", simsettings.ServeSimSettings)
 	http.HandleFunc("/Simulate", simControllers.SimulateHandler)
+	http.HandleFunc("/AddNewMana", simsettings.AddNewManaHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
